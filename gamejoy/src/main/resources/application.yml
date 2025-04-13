@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: password
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    change-log: classpath:/db/changelog/changelog-master.yml
+  doc:
+    api-docs:
+      path: /api-docs  # Standardpfad fuer die API-Dokumentation - http://localhost:8080/api-docs
+
+springdoc:
+  swagger-ui:
+    path: /custom-swagger-ui  # Custom Pfad zur Swagger-UI - http://localhost:8080/custom-swagger-ui
+

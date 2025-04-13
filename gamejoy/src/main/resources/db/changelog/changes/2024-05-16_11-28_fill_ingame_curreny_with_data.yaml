@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: load-ingame-currency-data
+      author: bastian
+      comment: create ingame_currency entity table
+      changes:
+        - sql:
+            dbms: postgresql
+            sql: |
+              INSERT INTO ingame_currency (currency_name, game_name) VALUES 
+              ('Gold', 'WoW Gold Retail'),
+              ('Gold', 'WoW Gold Classic'),
+              ('Taler', 'New World');

@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2024-04-16_22-58_change_login_col_in_app_users
+      author: bastian
+      comment: change login column name to user_name in app_user
+      changes:
+        - preConditions:
+            columnExists:
+              tableName: app_user
+              columnName: login
+        - renameColumn:
+            tableName: app_user
+            oldColumnName: login
+            newColumnName: user_name

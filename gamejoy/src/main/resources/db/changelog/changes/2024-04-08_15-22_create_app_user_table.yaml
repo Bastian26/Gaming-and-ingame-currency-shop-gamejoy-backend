@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2024-04-08_15-22_create_user_table
+      author: bastian
+      comment: create app_user entity table
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          - tableExists:
+              tableName: app_user
+      changes:
+        - createTable:
+            tableName: app_user
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: first_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: login
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false

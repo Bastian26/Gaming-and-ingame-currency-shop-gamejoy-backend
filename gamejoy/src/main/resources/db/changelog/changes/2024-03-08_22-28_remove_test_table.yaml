@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: Bastian S.
+      changes:
+        - sql:
+            sql: DROP TABLE IF EXISTS example_table;

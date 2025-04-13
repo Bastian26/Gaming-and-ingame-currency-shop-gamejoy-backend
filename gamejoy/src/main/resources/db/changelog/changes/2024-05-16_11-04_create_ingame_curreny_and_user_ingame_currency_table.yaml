@@ -1,0 +1,82 @@
+
+databaseChangeLog:
+  - changeSet:
+      id: 2024-05-16_11-04_create_ingame_curreny_table
+      author: bastian
+      comment: create ingame_currency entity table
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          - tableExists:
+              tableName: ingame_currency
+      changes:
+        - createTable:
+            tableName: ingame_currency
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: currency_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: game_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id:  2024-05-16_11-04_create_user_ingame_currency_table
+      author: bastian
+      comment: create user_ingame_currency entity table (@ManyToMany intermediate table)
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          - tableExists:
+              tableName: user_ingame_currency
+      changes:
+        - createTable:
+            tableName: user_ingame_currency
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  name: ingame_currency_id
+                  type: BIGINT
+              - column:
+                  name: amount
+                  type: INTEGER
+              - column:
+                  name: last_modified_dt
+                  type: TIMESTAMP
+
+  - changeSet:
+      id: 2024-05-16_11-04_add_foreign_key_constraints_to_user_ingame_currency_table
+      author: bastian
+      comment: add foreign key constraints to user_ingame_currency table
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: user_ingame_currency
+            baseColumnNames: [user_id]
+            referencedTableName: app_user
+            referencedColumnNames: [id]
+            constraintName: fk_user_ingame_currency_user
+
+        - addForeignKeyConstraint:
+            baseTableName: user_ingame_currency
+            baseColumnNames: [ingame_currency_id]
+            referencedTableName: ingame_currency
+            referencedColumnNames: [id]
+            constraintName: fk_user_ingame_currency_ingame_currency
