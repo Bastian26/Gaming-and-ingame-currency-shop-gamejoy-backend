@@ -12,7 +12,7 @@ import java.util.List;
 public class ApiError {
 
     @Schema(description = "HTTP status code", example = "404")
-    private int statusCode;
+    private int httpStatusCode;
 
     @Schema(description = "Error message", example = "User not found")
     private String message;

@@ -8,25 +8,21 @@ import com.gamejoy.domain.user.exceptions.UserNotFoundException;
 import com.gamejoy.domain.user.exceptions.InvalidPasswordException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.ServletWebRequest;
 
 import java.time.Instant;
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @Deprecated
     @ExceptionHandler(value = {AppException.class })
     @ResponseBody
     public ResponseEntity<ErrorDto> handleException(AppException exception) {
@@ -35,62 +31,67 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiError> handleValidationExceptions(MethodArgumentNotValidException ex,
+    public ResponseEntity<ApiError> handleValidationExceptions(MethodArgumentNotValidException exception,
                                                                HttpServletRequest request) {
-        String message = "Validation failed";
-        String details = String.format("Requested URI: %s", request.getRequestURI());
-        String errorCode = "VALIDATION_FAILED";
-        String timestamp = Instant.now().toString();
-
-        // Create a validation error list
-        List<String> validationErrors = ex.getBindingResult().getAllErrors().stream()
-                .map(error -> error.getDefaultMessage())
-                .collect(Collectors.toList());
-
-        log.error("Validation failed: {}, Request Details: {}", validationErrors, details, ex);
-
-        return new ResponseEntity<>(new ApiError(
-                400,
-                message,
-                validationErrors,
-                details,
-                timestamp,
-                errorCode
-        ), HttpStatus.BAD_REQUEST);
+        return createErrorResponse(exception, request, ErrorCode.VALIDATION_FAILED, true);
     }
 
+    // At the moment not used - but stays as example here
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ApiError> handleUserNotFound(UserNotFoundException exception,
                                                        HttpServletRequest request) {
         // Alternative with ServletWebRequest - request.getDescription(false) (shows URI path with more information)
-        return createApiError(exception, request, 404, HttpStatus.NOT_FOUND, "USER_NOT_FOUND");
+        return createErrorResponse(exception, request, ErrorCode.USER_NOT_FOUND, false);
     }
 
     @ExceptionHandler(InvalidPasswordException.class)
     public ResponseEntity<ApiError> handleInvalidPassword(InvalidPasswordException exception, HttpServletRequest request) {
-        return createApiError(exception, request, 400, HttpStatus.BAD_REQUEST, "INVALID_PASSWORD");
+        return createErrorResponse(exception, request, ErrorCode.INVALID_PASSWORD, false);
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
-    public ResponseEntity<ApiError> handleUserAlreadyExists(UserNotFoundException exception,
+    public ResponseEntity<ApiError> handleUserAlreadyExists(UserAlreadyExistsException exception,
                                                        HttpServletRequest request) {
         // Alternative with ServletWebRequest - request.getDescription(false) (shows URI path with more information)
-        return createApiError(exception, request, 409, HttpStatus.UNPROCESSABLE_ENTITY, "USER_ALREADY_EXISTS");
+        return createErrorResponse(exception, request, ErrorCode.USER_ALREADY_EXISTS, false);
     }
 
-    private ResponseEntity<ApiError> createApiError(Exception exception, HttpServletRequest request,
-                                                    int statusCode, HttpStatus httpStatus, String errorCode) {
+    private ResponseEntity<ApiError> createErrorResponse(Exception exception, HttpServletRequest request, ErrorCode errorCode,
+      boolean failedValidation) {
+
         String details = String.format("Requested URI: %s", request.getRequestURI());
         String timestamp = Instant.now().toString();
-        log.error("Exception occurred: {}, Request Details: {}", exception.getMessage(), details, exception);
+        List<String> validationErrors = Collections.emptyList();
+
+        if (failedValidation) {
+            validationErrors = ((MethodArgumentNotValidException) exception).getBindingResult().getAllErrors().stream()
+              .map(DefaultMessageSourceResolvable::getDefaultMessage)
+              .toList();
+
+            log.error("Validation failed: {}, Request Details: {}", validationErrors, details, exception);
+        } else {
+            log.error("Exception occurred: {}, Request Details: {}", exception.getMessage(), details, exception);
+        }
 
         return new ResponseEntity<>(new ApiError(
-                statusCode,
+                errorCode.getHttpStatus().value(),
                 exception.getMessage(),
-                Collections.<String>emptyList(),
+                validationErrors,
                 details,
                 timestamp,
-                errorCode
-        ), httpStatus);
+                errorCode.getCode()
+        ), errorCode.getHttpStatus());
     }
 }
+
+/**
+ * Example return:
+ * {
+ *   "statusCode": 404,
+ *   "message": "User not found",
+ *   "validationErrors": [],
+ *   "details": "Requested URI: /api/users/123",
+ *   "timestamp": "2025-04-14T12:34:56Z",
+ *   "errorCode": "USER_NOT_FOUND"
+ * }
+ */
