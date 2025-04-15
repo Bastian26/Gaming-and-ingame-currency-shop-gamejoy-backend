@@ -1,11 +1,11 @@
 package com.gamejoy.config.exceptionHandler;
 
-import com.gamejoy.domain.general.dto.api.ApiError;
-import com.gamejoy.domain.general.dto.api.ErrorDto;
-import com.gamejoy.domain.general.exceptions.AppException;
-import com.gamejoy.domain.userManagement.exceptions.UserAlreadyExistsException;
-import com.gamejoy.domain.userManagement.exceptions.UserNotFoundException;
-import com.gamejoy.domain.userManagement.exceptions.InvalidPasswordException;
+import com.gamejoy.domain.common.dto.api.ApiError;
+import com.gamejoy.domain.common.dto.api.ErrorDto;
+import com.gamejoy.domain.common.exceptions.AppException;
+import com.gamejoy.domain.usermanagement.exceptions.UserAlreadyExistsException;
+import com.gamejoy.domain.usermanagement.exceptions.UserNotFoundException;
+import com.gamejoy.domain.usermanagement.exceptions.InvalidPasswordException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;

@@ -1,6 +1,6 @@
 package com.gamejoy.config.validation;
 
-import com.gamejoy.config.validation.customAnnotation.ValidPassword;
+import com.gamejoy.config.validation.customannotation.ValidPassword;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.stereotype.Component;

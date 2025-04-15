@@ -1,7 +1,7 @@
 package com.gamejoy.domain.userIngameCurrency.entities;
 
 import com.gamejoy.domain.ingamecurrency.entities.IngameCurrency;
-import com.gamejoy.domain.userManagement.entities.User;
+import com.gamejoy.domain.usermanagement.entities.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

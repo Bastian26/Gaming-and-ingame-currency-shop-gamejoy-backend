@@ -11,5 +11,5 @@ public interface IngameCurrencyMapper {
 
     IngameCurrencyDto toIngameCurrencyDto(IngameCurrency ingameCurrency);
 
-    IngameCurrency toIngameCurrency(IngameCurrencyDto IngameCurrencyDto);
+    IngameCurrency toIngameCurrency(IngameCurrencyDto ingameCurrencyDto);
 }

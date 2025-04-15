@@ -1,6 +1,6 @@
 package com.gamejoy.config.validation;
 
-import com.gamejoy.config.validation.customAnnotation.ValidUsername;
+import com.gamejoy.config.validation.customannotation.ValidUsername;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

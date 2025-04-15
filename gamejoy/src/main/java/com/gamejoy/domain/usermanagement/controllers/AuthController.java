@@ -1,0 +1,64 @@
+package com.gamejoy.domain.usermanagement.controllers;
+
+import com.gamejoy.config.security.UserAuthProvider;
+import com.gamejoy.domain.common.dto.api.ApiResponseWrapper;
+import com.gamejoy.domain.usermanagement.dtos.CredentialDto;
+import com.gamejoy.domain.usermanagement.dtos.SignUpDto;
+import com.gamejoy.domain.usermanagement.dtos.UserDto;
+import com.gamejoy.domain.usermanagement.services.UserService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.net.URI;
+
+import static com.gamejoy.domain.usermanagement.constants.UserApiPaths.AUTH_API_BASE_URL;
+
+@RestController
+@RequestMapping(AUTH_API_BASE_URL)
+@RequiredArgsConstructor
+public class AuthController {
+
+    private final UserService userService;
+    private final UserAuthProvider userAuthProvider;
+
+    @PostMapping("/register")
+    public ResponseEntity<ApiResponseWrapper<UserDto>> register(@Valid @RequestBody SignUpDto signUpDto) {
+        UserDto user = userService.register(signUpDto);
+        user.setToken(userAuthProvider.createToken(user));
+
+        ApiResponseWrapper<UserDto> response = new ApiResponseWrapper<>(
+          user, String.format("User %s registered", signUpDto.userName()));
+        return ResponseEntity.created(URI.create("/api/v1/users/" + user.getId())).body(response);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponseWrapper<UserDto>> login(@RequestBody CredentialDto credentialDto) {
+        UserDto user = userService.login(credentialDto);
+        user.setToken(userAuthProvider.createToken(user));
+
+        ApiResponseWrapper<UserDto> response = new ApiResponseWrapper<>(
+          user, String.format("User %s logged in", credentialDto.userName()));
+        return ResponseEntity.ok(response);
+    }
+
+    // todo: needs to be completed - https://medium.com/@klcberat13/jwt-authentication-and-secure-logout-in-spring-boot-e9dcff2cc677
+    @PostMapping("/logout")
+    public ResponseEntity<ApiResponseWrapper<Object>> logout(HttpServletRequest request,
+      HttpServletResponse response) {
+        return logoutService.logout(request, response);
+    }
+
+    // Andere benutzerbezogene Methoden hier...
+    //todo: create method refreshToken
+    @PostMapping("/refresh")
+    public ResponseEntity<ApiResponseWrapper<String>> refreshToken(HttpServletRequest request) {
+        String newToken = userAuthProvider.refreshToken(request);
+        return ResponseEntity.ok(new ApiResponseWrapper<>(newToken, "Token refreshed successfully"));
+    }
+
+}
