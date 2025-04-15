@@ -1,0 +1,21 @@
+(Wird später aufgeteilt) User Management Microservice
+
+Funktionalität: Alle Funktionen, die mit der Benutzerverwaltung zu tun haben.
+
+Services:
+
+Registrierung
+
+Login
+
+Passwort zurücksetzen
+
+Benutzerprofil-Management
+
+Daten: Daten wie Benutzerprofile, Anmeldeinformationen und Authentifizierungsdaten.
+
+Schnittstellen: RESTful APIs, die Benutzerinformationen zurückgeben und Authentifizierungs-Token bereitstellen.
+
+Technologien: Authentifizierungsmechanismen (JWT, OAuth2), Datenbank für Benutzerverwaltung.
+
+Beispiel: Deine aktuelle UserController- und UserService-Logik wäre hier drin.

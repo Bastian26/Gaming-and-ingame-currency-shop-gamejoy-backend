@@ -1,0 +1,15 @@
+(Wird später aufgeteilt) Admin Dashboard Microservice
+
+Funktionalität: Alle administrativen Funktionen zur Verwaltung des Systems.
+
+Services:
+
+Benutzerverwaltung
+
+Überwachung von Transaktionen
+
+Verwaltung von Systemparametern
+
+Daten: Verwaltungskonfigurationen, Log-Daten, User-Verwaltung.
+
+Schnittstellen: API zur Verwaltung des Dashboards und der Admin-Tools.

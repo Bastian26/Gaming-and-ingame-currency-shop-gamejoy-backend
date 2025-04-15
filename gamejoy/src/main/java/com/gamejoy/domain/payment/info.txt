@@ -1,0 +1,15 @@
+(Wird später aufgeteilt) Payment Microservice (optional)
+
+Funktionalität: Falls Zahlungen in Echtwährung integriert werden (z.B. Kauf von Ingame-Währung durch echtes Geld), würde dieser Service diese Zahlungsabwicklung verwalten.
+
+Services:
+
+Integration von Zahlungsgateways (z. B. PayPal, Stripe)
+
+Verarbeitung von Zahlungen und Aufladung von Ingame-Währungen
+
+Abgleich von Zahlungsbestätigungen
+
+Daten: Zahlungsdetails, Transaktionshistorie.
+
+Schnittstellen: APIs zur Initiierung und Überwachung von Zahlungen.

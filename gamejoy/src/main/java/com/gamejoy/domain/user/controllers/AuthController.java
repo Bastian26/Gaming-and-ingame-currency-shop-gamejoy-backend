@@ -1,7 +1,7 @@
 package com.gamejoy.domain.user.controllers;
 
 import com.gamejoy.config.security.UserAuthProvider;
-import com.gamejoy.domain.general.dto.ApiResponseWrapper;
+import com.gamejoy.domain.general.dto.api.ApiResponseWrapper;
 import com.gamejoy.domain.user.dtos.CredentialDto;
 import com.gamejoy.domain.user.dtos.SignUpDto;
 import com.gamejoy.domain.user.dtos.UserDto;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 
-import static com.gamejoy.constants.ApiPaths.AUTH_API_BASE_URL;
+import static com.gamejoy.domain.user.controllers.constants.ApiPaths.AUTH_API_BASE_URL;
 
 @RestController
 @RequestMapping(AUTH_API_BASE_URL)

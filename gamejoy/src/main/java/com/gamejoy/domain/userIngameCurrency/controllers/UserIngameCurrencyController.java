@@ -1,7 +1,7 @@
 package com.gamejoy.domain.userIngameCurrency.controllers;
 
 import com.gamejoy.domain.ingameCurrency.dtos.IngameCurrencyDto;
-import com.gamejoy.domain.general.exceptions.NotFoundException;
+import com.gamejoy.domain.user.exceptions.UserNotFoundException;
 import com.gamejoy.domain.userIngameCurrency.services.UserIngameCurrencyService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +19,11 @@ public class UserIngameCurrencyController {
 
     @GetMapping("/ingameCurrencies/{userId}")
     public ResponseEntity<List<IngameCurrencyDto>> getIngameCurrenciesByUserId(@PathVariable("userId") Long userId)
-            throws NotFoundException {
+            throws UserNotFoundException {
 
         List<IngameCurrencyDto> ingameCurrenciesDto = userIngameCurrencyService.getIngameCurrenciesByUserId(userId);
         if (ingameCurrenciesDto == null) {
-            throw new NotFoundException(String.format("No Ingame Currency found for User with id %d", userId));
+            throw new UserNotFoundException(String.format("No Ingame Currency found for User with id %d", userId));
         }  else {
             return ResponseEntity.ok(ingameCurrenciesDto);
         }

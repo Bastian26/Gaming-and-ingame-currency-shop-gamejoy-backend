@@ -1,0 +1,17 @@
+(Wird später aufgeteilt) Ingame User Currency Microservice
+
+Funktionalität: Eine spezielle Variante des Währungsservices, die sich auf den individuellen User und deren Währungskonten konzentriert.
+
+Services:
+
+Bereitstellung von Salden für Benutzer
+
+Umrechnung von Ingame-Währungseinheiten
+
+Historie und Report von User-Transaktionen
+
+Daten: Daten zu User-Konten und deren Währungsständen.
+
+Schnittstellen: APIs zur Abfrage und Verwaltung der Währung der Benutzer.
+
+Technologien: Datenbank für Benutzersalden und Transaktionen, eventuell Caching für schnelle Abfragen.

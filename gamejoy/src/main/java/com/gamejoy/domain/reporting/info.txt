@@ -1,0 +1,15 @@
+(Wird später aufgeteilt) Reporting Microservice
+
+Funktionalität: Erzeugung von Berichten, Analysen und Dashboards für Benutzer oder Administratoren.
+
+Services:
+
+Erstellung von Nutzer- und Transaktionsberichten
+
+Statistiken über Ingame-Währung, Transaktionen und Aktivitäten
+
+Daten: Historische Transaktionsdaten, Nutzerdaten.
+
+Schnittstellen: RESTful APIs oder WebSockets für den Echtzeit-Zugriff auf Berichte.
+
+Technologien: Data Warehousing, BI-Tools (z. B. Tableau, Apache Superset).

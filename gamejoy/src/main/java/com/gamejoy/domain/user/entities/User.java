@@ -1,6 +1,5 @@
 package com.gamejoy.domain.user.entities;
 
-import com.gamejoy.config.validation.customAnnotation.*;
 import com.gamejoy.domain.userIngameCurrency.entities.UserIngameCurrency;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -58,7 +57,7 @@ public class User {
     private LocalDateTime createdAt;
 
     /**
-     * It's a @ManToMany, but since the intermediate table has additional attributes (is more complex),
+     * It's a @ManyToMany, but since the intermediate table has additional attributes (is more complex),
      * it is solved via a @oneToMany with intermediate table
      * **/
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -2,6 +2,7 @@ package com.gamejoy.domain.general.exceptions;
 
 import org.springframework.http.HttpStatus;
 
+// todo: not necessary - can be rmeoved in future
 @Deprecated
 public class AppException extends RuntimeException {
     private final HttpStatus httpStatus;

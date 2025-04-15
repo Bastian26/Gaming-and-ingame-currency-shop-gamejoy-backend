@@ -1,4 +1,4 @@
-package com.gamejoy.domain.general.dto;
+package com.gamejoy.domain.general.dto.api;
 
 public class ErrorDto {
 

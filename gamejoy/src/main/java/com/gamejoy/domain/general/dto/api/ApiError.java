@@ -1,4 +1,4 @@
-package com.gamejoy.domain.general.dto;
+package com.gamejoy.domain.general.dto.api;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

@@ -1,0 +1,17 @@
+(Wird später aufgeteilt) Ingame Currency Microservice
+
+Funktionalität: Alles, was mit der Verwaltung von Ingame-Währung und virtuellen Wirtschaftssystemen zu tun hat.
+
+Services:
+
+Verwaltung von Ingame-Währung
+
+Transaktionen zwischen Nutzern
+
+Balancing der virtuellen Währung
+
+Daten: Informationen über Währungen, Transaktionen, Salden und eventuell Transaktionshistorien.
+
+Schnittstellen: RESTful APIs zur Verwaltung und Abfrage von Währungseinheiten und Transaktionen.
+
+Technologien: Datenbank für Transaktionen und Salden.

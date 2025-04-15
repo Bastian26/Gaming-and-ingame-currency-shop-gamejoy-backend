@@ -1,0 +1,15 @@
+N(Wird später aufgeteilt) otification Microservice
+
+Funktionalität: Alle Funktionen im Zusammenhang mit Benachrichtigungen und Alerts.
+
+Services:
+
+Senden von E-Mails
+
+Push-Benachrichtigungen
+
+SMS-Benachrichtigungen
+
+Daten: Benachrichtigungsarten, Zustellstatus.
+
+Schnittstellen: APIs zur Erstellung und Verwaltung von Benachrichtigungen.

@@ -1,4 +1,4 @@
-package com.gamejoy.constants;
+package com.gamejoy.domain.user.controllers.constants;
 
 public class ApiPaths {
 

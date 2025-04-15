@@ -10,13 +10,11 @@ import com.gamejoy.domain.user.dtos.UserDto;
 import com.gamejoy.domain.user.entities.Address;
 import com.gamejoy.domain.user.entities.User;
 import com.gamejoy.domain.user.entities.UserRole;
-import com.gamejoy.domain.general.exceptions.NotFoundException;
 import com.gamejoy.domain.user.mappers.UserMapper;
 import com.gamejoy.domain.user.repositories.UserRepository;
 import com.gamejoy.domain.userIngameCurrency.services.UserIngameCurrencyService;
 import lombok.AllArgsConstructor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.gamejoy.config.validation.PasswordValidator;
@@ -26,8 +24,8 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+@Log4j2
 public class UserService {
-    private static final Logger LOGGER = LogManager.getLogger(UserService.class);
     private final UserRepository userRepository;
     private final UserIngameCurrencyService userIngameCurrencyService;
     private final AddressRepository addressRepository;
@@ -43,7 +41,7 @@ public class UserService {
         // Check if password matches
         if (passwordEncoder.matches(CharBuffer.wrap(credentialDto.password()),
                 user.getPassword())) {
-            LOGGER.info(String.format("User %s logged in", user.getUserName()));
+            log.info("User {} logged in", user.getUserName());
             return userMapper.toUserDto(user);
         }
         throw new InvalidPasswordException("Invalid password for user " + credentialDto.userName());
@@ -69,7 +67,7 @@ public class UserService {
         user.setAddress(savedAddress);
         user.setUserRole(UserRole.USER);
         User savedUser = userRepository.save(user);
-        LOGGER.info(String.format("User %s registered", user.getUserName()));
+        log.info("User {} registered", user.getUserName());
 
         /**
          * Create UserIngameCurrency initial value data - so every new user have at least a amount of 0
@@ -87,10 +85,10 @@ public class UserService {
             User user = userRepository.save(userO.get());
 
             String responseText = String.format("Username for User %s with id %d changed",user.getUserName(), id);
-            LOGGER.info(responseText);
+            log.info("Username for User {} with id {} changed", user.getUserName(), id);
             return responseText;
         } else {
-            throw new NotFoundException(String.format("User with %d not found", id));
+            throw new UserNotFoundException(String.format("User with %d not found", id));
         }
     }
 
@@ -107,10 +105,10 @@ public class UserService {
             userRepository.save(user);
 
             String responseText = String.format("Password for User %s with id %d changed",user.getUserName(), id);
-            LOGGER.info(responseText);
+            log.info(responseText);
             return responseText;
         } else {
-            throw new NotFoundException(String.format("User with %d not found", id));
+            throw new UserNotFoundException(String.format("User with %d not found", id));
         }
     }
 }

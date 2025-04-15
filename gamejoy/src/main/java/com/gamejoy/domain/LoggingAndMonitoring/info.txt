@@ -1,0 +1,17 @@
+(Wird später aufgeteilt) Logging und Monitoring Microservice
+
+Funktionalität: Zentralisierte Protokollierung und Überwachung des gesamten Systems.
+
+Services:
+
+Zentralisiertes Logging
+
+Ereignis-Tracking
+
+Health-Checks und Monitoring
+
+Daten: Logs, Fehlerprotokolle, Performance-Daten.
+
+Schnittstellen: API oder Webhooks für das Abrufen von Metriken und Logs.
+
+Technologien: ELK Stack (Elasticsearch, Logstash, Kibana), Prometheus, Grafana.

@@ -1,7 +1,7 @@
 package com.gamejoy.config.exceptionHandler;
 
-import com.gamejoy.domain.general.dto.ApiError;
-import com.gamejoy.domain.general.dto.ErrorDto;
+import com.gamejoy.domain.general.dto.api.ApiError;
+import com.gamejoy.domain.general.dto.api.ErrorDto;
 import com.gamejoy.domain.general.exceptions.AppException;
 import com.gamejoy.domain.user.exceptions.UserAlreadyExistsException;
 import com.gamejoy.domain.user.exceptions.UserNotFoundException;
@@ -23,6 +23,7 @@ import java.util.*;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    // todo: method not necessary - can be rmeoved in future
     @ExceptionHandler(value = {AppException.class })
     @ResponseBody
     public ResponseEntity<ErrorDto> handleException(AppException exception) {
@@ -67,7 +68,6 @@ public class GlobalExceptionHandler {
             validationErrors = ((MethodArgumentNotValidException) exception).getBindingResult().getAllErrors().stream()
               .map(DefaultMessageSourceResolvable::getDefaultMessage)
               .toList();
-
             log.error("Validation failed: {}, Request Details: {}", validationErrors, details, exception);
         } else {
             log.error("Exception occurred: {}, Request Details: {}", exception.getMessage(), details, exception);
