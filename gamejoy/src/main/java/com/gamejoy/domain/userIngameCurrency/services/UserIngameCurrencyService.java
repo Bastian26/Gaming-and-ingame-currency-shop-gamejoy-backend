@@ -1,13 +1,13 @@
 package com.gamejoy.domain.userIngameCurrency.services;
 
-import com.gamejoy.domain.ingameCurrency.dtos.IngameCurrencyDto;
-import com.gamejoy.domain.ingameCurrency.entities.IngameCurrency;
-import com.gamejoy.domain.user.entities.User;
+import com.gamejoy.domain.ingamecurrency.dtos.IngameCurrencyDto;
+import com.gamejoy.domain.ingamecurrency.entities.IngameCurrency;
+import com.gamejoy.domain.userManagement.entities.User;
 import com.gamejoy.domain.userIngameCurrency.entities.UserIngameCurrency;
-import com.gamejoy.domain.ingameCurrency.mappers.IngameCurrencyMapper;
-import com.gamejoy.domain.ingameCurrency.repositories.IngameCurrencyRepository;
+import com.gamejoy.domain.ingamecurrency.mappers.IngameCurrencyMapper;
+import com.gamejoy.domain.ingamecurrency.repositories.IngameCurrencyRepository;
 import com.gamejoy.domain.userIngameCurrency.repositories.UserIngameCurrencyRepository;
-import com.gamejoy.domain.user.repositories.UserRepository;
+import com.gamejoy.domain.userManagement.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

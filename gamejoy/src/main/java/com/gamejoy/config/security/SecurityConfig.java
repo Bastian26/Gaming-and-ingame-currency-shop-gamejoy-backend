@@ -12,8 +12,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import static com.gamejoy.domain.user.constants.UserApiPaths.AUTH_API_LOGIN;
-import static com.gamejoy.domain.user.constants.UserApiPaths.AUTH_API_REGISTER;
+import static com.gamejoy.domain.userManagement.constants.UserApiPaths.AUTH_API_LOGIN;
+import static com.gamejoy.domain.userManagement.constants.UserApiPaths.AUTH_API_REGISTER;
 
 @RequiredArgsConstructor
 @Configuration

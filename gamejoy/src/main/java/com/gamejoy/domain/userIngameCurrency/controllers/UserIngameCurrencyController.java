@@ -1,7 +1,7 @@
 package com.gamejoy.domain.userIngameCurrency.controllers;
 
-import com.gamejoy.domain.ingameCurrency.dtos.IngameCurrencyDto;
-import com.gamejoy.domain.user.exceptions.UserNotFoundException;
+import com.gamejoy.domain.ingamecurrency.dtos.IngameCurrencyDto;
+import com.gamejoy.domain.userManagement.exceptions.UserNotFoundException;
 import com.gamejoy.domain.userIngameCurrency.services.UserIngameCurrencyService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
