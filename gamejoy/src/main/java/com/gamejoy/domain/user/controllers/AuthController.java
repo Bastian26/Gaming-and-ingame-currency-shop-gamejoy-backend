@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 
-import static com.gamejoy.domain.user.controllers.constants.UserApiPaths.AUTH_API_BASE_URL;
+import static com.gamejoy.domain.user.constants.UserApiPaths.AUTH_API_BASE_URL;
 
 @RestController
 @RequestMapping(AUTH_API_BASE_URL)

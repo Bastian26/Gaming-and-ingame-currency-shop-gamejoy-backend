@@ -1,11 +1,11 @@
-package com.gamejoy.domain.user.controllers.constants;
+package com.gamejoy.domain.user.constants;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-// SonarQube: Add a private constructor to hide the implicit public one.
+// SonarQube: Add a private constructor to hide the implicit public one. Alternative @UtilityClass
 @NoArgsConstructor(access= AccessLevel.PRIVATE)
-public class UserApiPaths {
+public final class UserApiPaths {
 
     // AUTH API
     public static final String AUTH_API_BASE_URL = "/api/v1/auth";
