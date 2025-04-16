@@ -1,7 +1,7 @@
 package com.gamejoy.domain.usermanagement.mappers;
 
-import com.gamejoy.domain.usermanagement.dtos.SignUpDto;
-import com.gamejoy.domain.usermanagement.dtos.UserDto;
+import com.gamejoy.domain.authentication.dto.SignUpDto;
+import com.gamejoy.domain.usermanagement.dto.UserDto;
 import com.gamejoy.domain.usermanagement.entities.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

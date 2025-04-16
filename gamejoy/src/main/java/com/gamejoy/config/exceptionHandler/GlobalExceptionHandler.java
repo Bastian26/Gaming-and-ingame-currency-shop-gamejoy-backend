@@ -18,12 +18,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.time.Instant;
 import java.util.*;
 
+/**
+ * Global exception handler for the application, responsible for handling all exceptions
+ * and creating appropriate error responses. This class ensures that errors are returned
+ * in a uniform way and provides relevant information for troubleshooting.
+ *
+ * It handles specific exceptions such as:
+ * - AppException
+ * - MethodArgumentNotValidException (e.g. for invalid inputs)
+ * - UserNotFoundException
+ * - InvalidPasswordException
+ * - UserAlreadyExistsException
+ *
+ * The handler returns standardized error responses in JSON format, which include the error code,
+ * message, validation errors (if any), request details, and a timestamp.
+ */
 
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    // todo: method not necessary - can be rmeoved in future
+    // todo: method not necessary - can be removed in future
     @ExceptionHandler(value = {AppException.class })
     @ResponseBody
     public ResponseEntity<ErrorDto> handleException(AppException exception) {

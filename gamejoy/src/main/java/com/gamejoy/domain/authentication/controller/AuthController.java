@@ -1,12 +1,11 @@
-package com.gamejoy.domain.usermanagement.controllers;
+package com.gamejoy.domain.authentication.controller;
 
 import com.gamejoy.config.security.UserAuthProvider;
 import com.gamejoy.domain.common.dto.api.ApiError;
 import com.gamejoy.domain.common.dto.api.ApiResponseWrapper;
-import com.gamejoy.domain.usermanagement.dtos.CredentialDto;
-import com.gamejoy.domain.usermanagement.dtos.SignUpDto;
-import com.gamejoy.domain.usermanagement.dtos.UserDto;
-import com.gamejoy.domain.usermanagement.services.UserService;
+import com.gamejoy.domain.authentication.dto.CredentialDto;
+import com.gamejoy.domain.authentication.dto.SignUpDto;
+import com.gamejoy.domain.usermanagement.dto.UserDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -33,7 +32,7 @@ import static com.gamejoy.domain.usermanagement.constants.UserApiPaths.AUTH_API_
 @Tag(name = "Authentication Management", description = "APIs for authentication")
 public class AuthController {
 
-    private final UserService userService;
+    private final AuthService authService;
     private final UserAuthProvider userAuthProvider;
 
     @Operation(summary = "Creates/Registers a new user", description = "Adds a new user to the system - returns user info and token")
@@ -47,7 +46,7 @@ public class AuthController {
     })
     @PostMapping("/register")
     public ResponseEntity<ApiResponseWrapper<UserDto>> register(@Valid @RequestBody SignUpDto signUpDto) {
-        UserDto user = userService.register(signUpDto);
+        UserDto user = authService.register(signUpDto);
         user.setToken(userAuthProvider.createToken(user));
 
         ApiResponseWrapper<UserDto> response = new ApiResponseWrapper<>(
@@ -66,7 +65,7 @@ public class AuthController {
     })
     @PostMapping("/login")
     public ResponseEntity<ApiResponseWrapper<UserDto>> login(@RequestBody CredentialDto credentialDto) {
-        UserDto user = userService.login(credentialDto);
+        UserDto user = authService.login(credentialDto);
         user.setToken(userAuthProvider.createToken(user));
 
         ApiResponseWrapper<UserDto> response = new ApiResponseWrapper<>(

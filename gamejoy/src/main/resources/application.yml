@@ -20,3 +20,6 @@ springdoc:
   swagger-ui:
     path: /custom-swagger-ui  # Custom Pfad zur Swagger-UI - http://localhost:8080/custom-swagger-ui
 
+frontend:
+  url: "http://localhost:4200" # todo: change later with multiple files for envs: https://meine-website.de  # für Produktion
+

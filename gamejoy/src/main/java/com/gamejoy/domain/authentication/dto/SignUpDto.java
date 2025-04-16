@@ -1,4 +1,4 @@
-package com.gamejoy.domain.usermanagement.dtos;
+package com.gamejoy.domain.authentication.dto;
 
 import com.gamejoy.config.validation.customannotation.ValidPassword;
 import com.gamejoy.config.validation.customannotation.ValidUsername;

@@ -1,4 +1,4 @@
-package com.gamejoy.domain.usermanagement.dtos;
+package com.gamejoy.domain.usermanagement.dto;
 
 import com.gamejoy.domain.usermanagement.entities.Address;
 import com.gamejoy.domain.usermanagement.entities.UserRole;

@@ -1,4 +1,4 @@
-package com.gamejoy.domain.admindashboard.controller;
+package com.gamejoy.domain.admin.controller;
 
 import com.gamejoy.domain.usermanagement.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
-  private final UserService userService;
-
-  @PostMapping("/users/changeUsername")
-  public ResponseEntity<String> changeUsername(@RequestParam Long id, @RequestParam String username) {
-    return ResponseEntity.ok(userService.changeUsername(id, username));
-  }
-
-  @PostMapping("/users/changePassword")
-  public ResponseEntity<String> changePassword(@RequestParam Long id, @RequestParam String password) {
-    return ResponseEntity.ok(userService.changePassword(id, password.toCharArray()));
-  }
+//  private final UserService userService;
+//
+//  @PostMapping("/users/changeUsername")
+//  public ResponseEntity<String> changeUsername(@RequestParam Long id, @RequestParam String username) {
+//    return ResponseEntity.ok(userService.changeUsername(id, username));
+//  }
+//
+//  @PostMapping("/users/changePassword")
+//  public ResponseEntity<String> changePassword(@RequestParam Long id, @RequestParam String password) {
+//    return ResponseEntity.ok(userService.changePassword(id, password.toCharArray()));
+//  }
 }

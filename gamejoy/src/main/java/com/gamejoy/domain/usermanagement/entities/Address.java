@@ -14,7 +14,7 @@ import lombok.ToString;
 @ToString
 public class Address {
 
-    // todo: change to long
+    // todo: change to long?
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_id")
