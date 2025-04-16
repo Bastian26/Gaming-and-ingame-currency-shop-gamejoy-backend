@@ -67,7 +67,7 @@ public class UserService {
         user.setAddress(savedAddress);
         user.setUserRole(UserRole.USER);
         User savedUser = userRepository.save(user);
-        log.info("User {} registered", user.getUserName());
+        log.info("User {} successfully registered", user.getUserName());
 
         /**
          * Create UserIngameCurrency initial value data - so every new user have at least a amount of 0

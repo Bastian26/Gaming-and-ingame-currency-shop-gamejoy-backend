@@ -9,21 +9,21 @@ import jakarta.validation.Valid;
 import com.gamejoy.domain.usermanagement.services.UserService;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
     //todo: still todo
-    @PostMapping("/changeUsername")
+    @PostMapping("/users/changeUsername")
     public ResponseEntity<String> changeUsername(Long id, @Valid String username) {
         String usernameChangeResponse = userService.changeUsername(id, username);
         return ResponseEntity.ok().body(usernameChangeResponse);
     }
 
     //todo: still todo
-    @PostMapping("/changePassword")
+    @PostMapping("/users/changePassword")
     public ResponseEntity<String> changePassword(Long id, @Valid char[] password) {
         String passwordChangeResponse = userService.changePassword(id, password);
         return ResponseEntity.ok().body(passwordChangeResponse);

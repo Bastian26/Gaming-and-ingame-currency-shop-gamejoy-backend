@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.gamejoy.domain.usermanagement.dtos.UserDto;
+import com.gamejoy.domain.usermanagement.entities.UserRole;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +33,7 @@ public class UserAuthProvider {
     public String createToken(UserDto userDto) {
         Date now = new Date();
         // JWT Token expires after 1 hour
-        Date validity = new Date(now.getTime() + 36_000_000);
+        Date validity = new Date(now.getTime() + 36_000_00);
 
         return JWT.create()
                 .withIssuer(userDto.getUserName())
@@ -40,6 +41,7 @@ public class UserAuthProvider {
                 .withExpiresAt(validity)
                 .withClaim("firstName", userDto.getFirstName())
                 .withClaim("lastName", userDto.getLastName())
+                .withClaim("role", UserRole.USER.name())
                 .sign(Algorithm.HMAC256(secretKey));
     }
 
