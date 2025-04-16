@@ -8,6 +8,7 @@ import jakarta.websocket.server.PathParam;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,24 +35,22 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    /*@GetMapping
-    public ResponseEntity<List<UserDto>> getAllUsers() {
-        List<UserDto> userDto = userService.getAllUsers();
+    @GetMapping("/users")
+    public ResponseEntity<ApiResponseWrapper<List<UserDto>>> getAllUsers() {
+        List<UserDto> userDtoList = userService.getAllUsers();
 
-
-
-        return ResponseEntity.ok().body(userDto);
+        ApiResponseWrapper<List<UserDto>> response = new ApiResponseWrapper<>(
+          userDtoList, "Retrieved all Users"
+        );
+        return ResponseEntity.ok(response);
     }
 
-    @
-    public ResponseEntity<UserDto> deleteUser(Long id) {
-        UserDto userDto = userService.getUserById(id);
-
-
-
-        return ResponseEntity.ok().body(userDto);
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.deleteUserById(id);
+        return ResponseEntity.noContent().build();  // Return HTTP 204 No Content to indicate successful deletion
     }
-
+/*
     @GetMapping
     public ResponseEntity<UserDto> updateUser(Long id) {
         UserDto userDto = userService.getUserById(id);

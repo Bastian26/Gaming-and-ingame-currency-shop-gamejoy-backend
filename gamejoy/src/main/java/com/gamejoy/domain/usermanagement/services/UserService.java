@@ -5,6 +5,7 @@ import com.gamejoy.domain.usermanagement.exceptions.UserNotFoundException;
 import com.gamejoy.domain.usermanagement.entities.User;
 import com.gamejoy.domain.usermanagement.mappers.UserMapper;
 import com.gamejoy.domain.usermanagement.repositories.UserRepository;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,30 +18,38 @@ import java.util.Optional;
 @AllArgsConstructor
 @Log4j2
 public class UserService {
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
 
-    public UserDto getUserById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(
-            () -> new UserNotFoundException(String.format("User with %d not found", id))
+    public UserDto getUserById(Long userId) {
+        // Alternative: throw new ResourceNotFoundException("User not found")
+        User user = userRepository.findById(userId).orElseThrow(
+            () -> new UserNotFoundException(String.format("User with %d not found", userId))
           );
+
         return userMapper.toUserDto(user);
     }
 
-   /* public UserDto getAllUsers() {
-        Optional<User> user = userRepository.findById(id).orElseThrow(
-          () -> new UserNotFoundException(String.format("User with %d not found", id))
+   public List<UserDto> getAllUsers() {
+        List<User> userList = userRepository.findAll();
+
+        if (userList.isEmpty()) {
+            log.info("No users found in the database");
+        }
+        return userMapper.toUserDtoList(userList);
+    }
+
+    public void deleteUserById(Long userId) {
+        // Check if the user exists in the database before deletion
+        User entity = userRepository.findById(userId).orElseThrow(
+          () -> new UserNotFoundException(String.format("User with ID %d not found", userId))
         );
-        UserDto userDto = userMapper.toUserDto(user.get());
-        return userDto;
+        userRepository.delete(entity);
     }
 
-    public UserDto deleteUserById(Long id) {
-        userRepository.deleteById(id);
-        return userDto;
-    }
-
+/*
     public UserDto updateUserById(Long id) {
         userRepository.updateUser(id);
         return userDto;

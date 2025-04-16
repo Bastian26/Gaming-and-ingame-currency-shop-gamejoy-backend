@@ -51,7 +51,7 @@ public class AuthController {
 
         ApiResponseWrapper<UserDto> response = new ApiResponseWrapper<>(
           user, String.format("User %s registered", signUpDto.userName()));
-        return ResponseEntity.created(URI.create("/api/v1/users/" + user.getId())).body(response);
+        return ResponseEntity.created(URI.create("/api/v1/auth/" + user.getId())).body(response);
     }
 
     @Operation(summary = "Create/Register a new user", description = "Registers a new user in the system and returns the user's details along with a JWT token for authentication.")
@@ -82,21 +82,16 @@ public class AuthController {
 //        return logoutService.logout(request, response);
     }
 
-    /*@Operation(summary = "Create a new user", description = "Add a new user to the system")
-    @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "User created successfully",
-        content = @Content(schema = @Schema(implementation = UserDto.class))),
-      @ApiResponse(responseCode = "400", description = "Invalid request data",
-        content = @Content(schema = @Schema()))
-    })
-    // Andere benutzerbezogene Methoden hier...
-    //todo: create method refreshToken
-    @PostMapping("/refresh")
-    public ResponseEntity<ApiResponseWrapper<String>> refreshToken(HttpServletRequest request) {
-//        String newToken = userAuthProvider.refreshToken(request);
-//        return ResponseEntity.ok(new ApiResponseWrapper<>(newToken, "Token refreshed successfully"));
-        return null;
+    /*@PostMapping("/users/{id}/changeUsername")
+    public ResponseEntity<String> changeUsername(@PathVariable Long id, @Valid @RequestBody String username) {
+        String usernameChangeResponse = userService.changeUsername(id, username);
+        return ResponseEntity.ok().body(usernameChangeResponse);
+    }
 
+    @PostMapping("/users/{id}/changePassword")
+    public ResponseEntity<String> changePassword(@PathVariable Long id, @Valid @RequestBody char[] password) {
+        String passwordChangeResponse = userService.changePassword(id, password);
+        return ResponseEntity.ok().body(passwordChangeResponse);
     }*/
 
 }

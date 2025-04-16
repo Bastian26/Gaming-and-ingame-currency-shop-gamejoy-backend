@@ -57,7 +57,7 @@ public class AuthService {
                     String.format("Invalid password for user %s", signUpDto.userName()));
         }*/
 
-        User user = userMapper.signUpToUser(signUpDto);
+        User user = userMapper.signUpDtoToUser(signUpDto);
         // encode password with passwordEncoder
         user.setPassword(passwordEncoder.encode(CharBuffer.wrap(signUpDto.password())));
         Address savedAddress = addressRepository.save(user.getAddress());
