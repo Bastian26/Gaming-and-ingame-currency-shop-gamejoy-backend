@@ -2,9 +2,7 @@ package com.gamejoy.domain.usermanagement.controllers;
 
 import com.gamejoy.domain.common.dto.api.ApiResponseWrapper;
 import com.gamejoy.domain.usermanagement.dto.UserDto;
-import com.gamejoy.domain.usermanagement.entities.User;
 import com.gamejoy.domain.usermanagement.mappers.UserMapper;
-import jakarta.websocket.server.PathParam;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +16,14 @@ import jakarta.validation.Valid;
 import com.gamejoy.domain.usermanagement.services.UserService;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
     private final UserMapper userMapper;
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ApiResponseWrapper<UserDto>> getUserById(@PathVariable Long id) {
         UserDto userDto = userService.getUserById(id);
 
@@ -35,7 +33,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/users")
+    @GetMapping()
     public ResponseEntity<ApiResponseWrapper<List<UserDto>>> getAllUsers() {
         List<UserDto> userDtoList = userService.getAllUsers();
 
@@ -45,7 +43,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUserById(id);
         return ResponseEntity.noContent().build();  // Return HTTP 204 No Content to indicate successful deletion
@@ -61,14 +59,14 @@ public class UserController {
     }*/
 
     //todo: still todo
-    @PostMapping("/users/changeUsername")
+    @PostMapping("/changeUsername")
     public ResponseEntity<String> changeUsername(Long id, @Valid String username) {
         String usernameChangeResponse = userService.changeUsername(id, username);
         return ResponseEntity.ok().body(usernameChangeResponse);
     }
 
     //todo: still todo
-    @PostMapping("/users/changePassword")
+    @PostMapping("/changePassword")
     public ResponseEntity<String> changePassword(Long id, @Valid char[] password) {
         String passwordChangeResponse = userService.changePassword(id, password);
         return ResponseEntity.ok().body(passwordChangeResponse);
