@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/${DB_NAME:postgresDb}   # DB Name for env var (with default value)
+    username: ${DB_USER:postgresUser}
+    password: ${DB_PASSWORD:secret}
+
+    frontend:
+      url: "https://meine-website.de"  # Für Prod

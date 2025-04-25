@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://prod-db-host:5432/sitDb         # For Prod: external DB-Host
+    username: prodUser                                     # Prod-DB User
+    password: prodSecret                                   # Prod-DB Password

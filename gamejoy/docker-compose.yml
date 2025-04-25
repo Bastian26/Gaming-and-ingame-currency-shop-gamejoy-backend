@@ -1,0 +1,20 @@
+# Start with "docker-compose up -d" (docker-compose down for DOWN) OR
+# mvn spring-boot:run -Pdocker-compose -Dspring-boot.run.profiles=docker-compose
+version: '3.8'
+services:
+  db:
+    image: postgres
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgresUser #$YOUR_USERNAME
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=postgresDb
+    ports:
+      - 5432:5432
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    labels:
+      org.springframework.boot.service-connection: redis
