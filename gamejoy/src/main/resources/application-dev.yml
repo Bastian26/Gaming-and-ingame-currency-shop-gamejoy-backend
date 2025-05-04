@@ -14,7 +14,7 @@
 #https://stackoverflow.com/questions/70945302/cant-connect-to-database-from-springboot-app-password-authentication-failed-for/70945553
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres # Falls Spring Boot lokal läuft
+    url: jdbc:postgresql://localhost:5432/customer # Falls Spring Boot lokal läuft
     # url: jdbc:postgresql://postgres:5432/customer # Falls Spring Boot im Docker läuft
-    username: postgres
+    username: user
     password: password
