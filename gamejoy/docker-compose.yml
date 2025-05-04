@@ -1,20 +1,40 @@
 # Start with "docker-compose up -d" (docker-compose down for DOWN) OR
 # mvn spring-boot:run -Pdocker-compose -Dspring-boot.run.profiles=docker-compose todo: would need maven plugin/profile
+# docker-compose down -v  # VOLUMES LÖSCHEN – sonst bleibt das alte Password
+#version: '3.8'
+#services:
+#  db:
+#    image: postgres
+#    container_name: db
+#    environment:
+#      - POSTGRES_USER=postgresUser #$YOUR_USERNAME
+#      - POSTGRES_PASSWORD=secret
+#      - POSTGRES_DB=postgresDb
+#    ports:
+#      - 5432:5432
+#
+#  redis:
+#    image: redis:latest
+#    ports:
+#      - "6379:6379"
+#    labels:
+#      org.springframework.boot.service-connection: redis
+
 version: '3.8'
 services:
-  db:
+  postgres:
+    container_name: postgres
     image: postgres
-    container_name: db
     environment:
-      - POSTGRES_USER=postgresUser #$YOUR_USERNAME
-      - POSTGRES_PASSWORD=secret
-      - POSTGRES_DB=postgresDb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: customer
     ports:
-      - 5432:5432
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
 
-  redis:
-    image: redis:latest
-    ports:
-      - "6379:6379"
-    labels:
-      org.springframework.boot.service-connection: redis
+networks:
+  postgres:
+    driver: bridge

@@ -1,9 +1,20 @@
+#spring:
+#  datasource:
+#    #url: jdbc:postgresql://localhost:5432/postgres  # Dev: localhost
+#    url: jdbc:postgresql://localhost:5432/postgresDb
+#    username: postgresUser  # For all enviroment as env var in future
+#    password: secret        # For all enviroment as env var in future
+#
+#springdoc:
+#  swagger-ui:
+#    path: /custom-swagger-ui  # Custom Pfad zur Swagger-UI - http://localhost:8080/custom-swagger-ui
+
+
+
+#https://stackoverflow.com/questions/70945302/cant-connect-to-database-from-springboot-app-password-authentication-failed-for/70945553
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgresDb  # Dev: localhost
-    username: postgresUser  # For all enviroment as env var in future
-    password: secret        # For all enviroment as env var in future
-
-    springdoc:
-      swagger-ui:
-        path: /custom-swagger-ui  # Custom Pfad zur Swagger-UI - http://localhost:8080/custom-swagger-ui
+    url: jdbc:postgresql://localhost:5432/postgres # Falls Spring Boot lokal läuft
+    # url: jdbc:postgresql://postgres:5432/customer # Falls Spring Boot im Docker läuft
+    username: postgres
+    password: password
