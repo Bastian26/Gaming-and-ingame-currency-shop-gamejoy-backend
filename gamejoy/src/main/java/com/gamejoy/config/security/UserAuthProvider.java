@@ -4,13 +4,18 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.gamejoy.config.security.model.UserPrincipal;
 import com.gamejoy.domain.usermanagement.dto.UserDto;
+import com.gamejoy.domain.usermanagement.entities.User;
 import com.gamejoy.domain.usermanagement.entities.UserRole;
+import com.gamejoy.domain.usermanagement.repositories.UserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.*;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.Base64;
@@ -30,6 +35,8 @@ public class UserAuthProvider {
 
     @Value("${security.jwt.token.secret-key:secret-key}")
     private String secretKey;
+
+    private final UserRepository userRepository;
 
     @PostConstruct
     protected  void inti() {
@@ -51,17 +58,37 @@ public class UserAuthProvider {
                 .sign(Algorithm.HMAC256(secretKey));
     }
 
+    /**
+     * Decode token and extract username.
+     * Then it loads the user form db. So its ensured that the user exists in the db (more secure)
+     * @param token
+     * @return Authentication: represents central security object of Spring Security
+     */
     public Authentication validateToken(String token) {
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT decodedJWT = verifier.verify(token);
 
-        UserDto user = UserDto.builder()
-                .userName(decodedJWT.getIssuer())
-                .firstName(decodedJWT.getClaim("firstName").asString())
-                .lastName(decodedJWT.getClaim("lastName").asString())
-                .build();
+        String username = decodedJWT.getIssuer(); // alternative would be subject, but in this app its Issuer
 
-        return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+        User user = userRepository.findByUserName(username)
+          .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        UserPrincipal principal = new UserPrincipal(user);
+
+        return new UsernamePasswordAuthenticationToken(principal, null, principal.getAuthorities());
     }
 }
+
+/**
+ * Alternative:
+ * get information straight from JWT token.
+ * Attention! That would be more insecure!
+ *
+ * User user = User.builder()
+ *     .userName(decodedJWT.getIssuer())
+ *     .firstName(decodedJWT.getClaim("firstName").asString())
+ *     .lastName(decodedJWT.getClaim("lastName").asString())
+ *     .userRole(UserRole.valueOf(decodedJWT.getClaim("role").asString()))
+ *     .build();
+ */

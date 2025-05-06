@@ -61,18 +61,55 @@ public class UserController {
         return ResponseEntity.ok().body(userDto);
     }*/
 
-    //todo: still todo - move to admin
+    /*//todo: still todo - move to admin
     @PostMapping("/changeUsername")
     public ResponseEntity<String> changeUsername(Long id, @Valid String username) {
         String usernameChangeResponse = userService.changeUsername(id, username);
         return ResponseEntity.ok().body(usernameChangeResponse);
     }
 
+    // User hosuld only change pw for himself
     @PostMapping("/me/change-password")
     public ResponseEntity<String> changePassword(@RequestBody PasswordChangeRequest request,
       @AuthenticationPrincipal UserDetails userDetails) {
-        String response = userService.changePassword(userDetails.getUsername(), request.getNewPassword());
+
+        String response = userService.changePassword(
+          userDetails.getUsername(), // username of authenticated user
+          request.getOldPassword(),
+          request.getNewPassword()
+        );
+
         return ResponseEntity.ok(response);
     }
+
+
+    *//*public class PasswordChangeRequest {
+        private String oldPassword;
+        private String newPassword;
+
+        // Getter und Setter
+        public String getOldPassword() {
+            return oldPassword;
+        }
+
+        public void setOldPassword(String oldPassword) {
+            this.oldPassword = oldPassword;
+        }
+
+        public String getNewPassword() {
+            return newPassword;
+        }
+
+        public void setNewPassword(String newPassword) {
+            this.newPassword = newPassword;
+        }
+    }*//*
+
+    *//**
+     * {
+     *     "oldPassword": "currentPassword123",
+     *     "newPassword": "newSecurePassword123"
+     * }
+     */
 
 }

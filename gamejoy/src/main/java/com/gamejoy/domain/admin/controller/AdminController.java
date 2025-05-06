@@ -25,6 +25,10 @@ public class AdminController {
 //  }
 //
 
+  /*@PreAuthorize("hasRole('ADMIN')")
+  @PutMapping("/admin/users/{id}/promote")
+  public void promoteUser(@PathVariable Long id) { ... user.setUserRole(UserRole.ADMIN);
+userRepository.save(user);}*/
 
  /* //todo: still todo
   @PostMapping("/changePassword")
