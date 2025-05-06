@@ -1,6 +1,7 @@
 package com.gamejoy.domain.admin.controller;
 
 import com.gamejoy.domain.usermanagement.services.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,8 +24,71 @@ public class AdminController {
 //    return ResponseEntity.ok(userService.changeUsername(id, username));
 //  }
 //
-//  @PostMapping("/users/changePassword")
-//  public ResponseEntity<String> changePassword(@RequestParam Long id, @RequestParam String password) {
-//    return ResponseEntity.ok(userService.changePassword(id, password.toCharArray()));
-//  }
+
+
+ /* //todo: still todo
+  @PostMapping("/changePassword")
+  public ResponseEntity<String> changePassword(Long id, @Valid char[] password) {
+    String passwordChangeResponse = userService.changePassword(id, password);
+    return ResponseEntity.ok().body(passwordChangeResponse);
+  }*/
+
+  /*@POST
+  @Path("user/create")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Secured("ROLE_ADMIN")
+  public User createUser(User user) {
+    if(user.getPassword() == null || user.getPassword().equals("")) {
+      //throw exception...
+    }
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
+    userService.save(user);
+    return user;
+}
+
+
+}
+ @PutMapping("/users/{username}/reset-password")
+@PreAuthorize("hasRole('ADMIN')")
+public ResponseEntity<?> resetPassword(@PathVariable String username,
+                                       @RequestBody String newPassword) {
+    userService.resetPasswordAsAdmin(username, newPassword);
+    return ResponseEntity.ok("Password reset by admin.");
+}
+
+   */
+
+
+/*
+Benutzerverwaltung:
+
+Alle Benutzer anzeigen / suchen
+
+Benutzer deaktivieren / aktivieren
+
+Rollen zuweisen / ändern
+
+System-Monitoring / Metriken:
+
+Systemstatus
+
+Log-Einträge / Audit-Trails
+
+API-Nutzungsstatistiken
+
+Verwaltung von Ressourcen:
+
+Inhalte erstellen / ändern / löschen (z. B. Beiträge, Produkte, Einstellungen)
+
+Berechtigungen steuern
+
+Admin-spezifische Aufgaben:
+
+Manuelle Datenpflege
+
+Export/Import von Daten
+
+Konfiguration von globalen Einstellungen
+ */
+
 }

@@ -21,4 +21,3 @@ spring:
 frontend:
   url: "http://localhost:4200" # todo: change later with multiple files for envs: https://meine-website.de  # für Produktion
 
-

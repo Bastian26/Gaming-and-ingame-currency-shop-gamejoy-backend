@@ -73,25 +73,36 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    // todo: needs to be completed - https://medium.com/@klcberat13/jwt-authentication-and-secure-logout-in-spring-boot-e9dcff2cc677
-    @Operation(summary = "Logout", description = "Log out of the system")
-    @PostMapping("/logout")
-    public ResponseEntity<ApiResponseWrapper<Object>> logout(HttpServletRequest request,
-      HttpServletResponse response) {
-        return null;
-//        return logoutService.logout(request, response);
-    }
+    //reset password
 
-    /*@PostMapping("/users/{id}/changeUsername")
-    public ResponseEntity<String> changeUsername(@PathVariable Long id, @Valid @RequestBody String username) {
-        String usernameChangeResponse = userService.changeUsername(id, username);
-        return ResponseEntity.ok().body(usernameChangeResponse);
-    }
+    /*public String refreshToken(String token) {
+        final Date createdDate = new Date();
+        final Date expirationDate = calculateExpirationDate(createdDate);
 
-    @PostMapping("/users/{id}/changePassword")
-    public ResponseEntity<String> changePassword(@PathVariable Long id, @Valid @RequestBody char[] password) {
-        String passwordChangeResponse = userService.changePassword(id, password);
-        return ResponseEntity.ok().body(passwordChangeResponse);
+        final Claims claims = getAllClaimsFromToken(token);
+        claims.setIssuedAt(createdDate);
+        claims.setExpiration(expirationDate);
+
+        return Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS512, secret).compact();
     }*/
-
 }
+
+
+/*Authentifizierung & Registrierung:
+
+Login (/auth/login)
+
+Registrierung (/auth/register)
+
+Token-Refresh (wenn JWT verwendet wird)
+
+
+Verifizierungen:
+
+E-Mail-Bestätigung
+
+Passwort-Vergessen/Reset
+
+Sonstige User-spezifische Endpunkte:
+
+Eigene Aktivitäten / Daten abrufen (z. B. /me)*/

@@ -6,10 +6,13 @@ import com.gamejoy.domain.usermanagement.mappers.UserMapper;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
@@ -58,17 +61,18 @@ public class UserController {
         return ResponseEntity.ok().body(userDto);
     }*/
 
-    //todo: still todo
+    //todo: still todo - move to admin
     @PostMapping("/changeUsername")
     public ResponseEntity<String> changeUsername(Long id, @Valid String username) {
         String usernameChangeResponse = userService.changeUsername(id, username);
         return ResponseEntity.ok().body(usernameChangeResponse);
     }
 
-    //todo: still todo
-    @PostMapping("/changePassword")
-    public ResponseEntity<String> changePassword(Long id, @Valid char[] password) {
-        String passwordChangeResponse = userService.changePassword(id, password);
-        return ResponseEntity.ok().body(passwordChangeResponse);
+    @PostMapping("/me/change-password")
+    public ResponseEntity<String> changePassword(@RequestBody PasswordChangeRequest request,
+      @AuthenticationPrincipal UserDetails userDetails) {
+        String response = userService.changePassword(userDetails.getUsername(), request.getNewPassword());
+        return ResponseEntity.ok(response);
     }
+
 }
