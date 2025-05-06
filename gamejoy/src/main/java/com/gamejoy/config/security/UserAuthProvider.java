@@ -3,6 +3,7 @@ package com.gamejoy.config.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.gamejoy.config.security.model.UserPrincipal;
 import com.gamejoy.domain.usermanagement.dto.UserDto;
@@ -67,6 +68,7 @@ public class UserAuthProvider {
     public Authentication validateToken(String token) {
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
         JWTVerifier verifier = JWT.require(algorithm).build();
+        // Check if token is valid (expired,
         DecodedJWT decodedJWT = verifier.verify(token);
 
         String username = decodedJWT.getIssuer(); // alternative would be subject, but in this app its Issuer

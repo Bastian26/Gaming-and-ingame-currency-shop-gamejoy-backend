@@ -48,6 +48,7 @@ public class AuthService {
         Optional<User> oUser = userRepository.findByUserName(signUpDto.userName());
 
         if (oUser.isPresent()) {
+            // Alternative: BadCredentialsException
             throw new UserAlreadyExistsException(String.format("User %s already exists", signUpDto.userName()));
         }
 
