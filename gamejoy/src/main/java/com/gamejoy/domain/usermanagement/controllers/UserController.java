@@ -69,15 +69,13 @@ public class UserController {
         return ResponseEntity.ok().body(usernameChangeResponse);
     }**/
 
-    // User hosuld only change pw for himself
-    @PostMapping("/me/change-password")
+    // User should only change pw for himself
+    @PostMapping("/change-password")
     public ResponseEntity<String> changePassword(@RequestBody PasswordChangeRequest request,
       @AuthenticationPrincipal UserDetails userDetails) {
 
-
-
         String response = userService.changePassword(
-          userDetails.getUsername(), // username of authenticated user
+          userDetails.getUsername(), // username of authenticated user (fetched from SecurityContext by @AuthenticationPrincipal)
           request.getOldPassword(),
           request.getNewPassword()
         );
