@@ -53,10 +53,13 @@ public class UserAuthProvider {
                 .withIssuer(userDto.getUserName())
                 .withIssuedAt(now)
                 .withExpiresAt(validity)
-                .withClaim("firstName", userDto.getFirstName())
-                .withClaim("lastName", userDto.getLastName())
+                .withClaim("id", userDto.getId())
                 .withClaim("role", UserRole.USER.name())
-                .sign(Algorithm.HMAC256(secretKey));
+                .sign(Algorithm.HMAC256(secretKey));//                .withClaim("firstName", userDto.getFirstName())
+
+        // sollte heer im nrgrx gespecihert werden wegen datenshcutzgründen
+        // firstname
+//                .withClaim("lastName", userDto.getLastName())
     }
 
     /**
