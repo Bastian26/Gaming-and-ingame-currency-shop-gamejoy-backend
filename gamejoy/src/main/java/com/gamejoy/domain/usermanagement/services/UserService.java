@@ -1,13 +1,16 @@
 package com.gamejoy.domain.usermanagement.services;
 
 import com.gamejoy.domain.usermanagement.dto.UserDto;
+import com.gamejoy.domain.usermanagement.entities.PasswordChangeRequest;
 import com.gamejoy.domain.usermanagement.exceptions.UserNotFoundException;
 import com.gamejoy.domain.usermanagement.entities.User;
 import com.gamejoy.domain.usermanagement.mappers.UserMapper;
 import com.gamejoy.domain.usermanagement.repositories.UserRepository;
+import java.util.Arrays;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -69,19 +72,28 @@ public class UserService {
         }
     }
 
-    public String changePassword(long id, char[] password) {
+    // here implement check for old password to ensure security
+    public String changePassword(long id, PasswordChangeRequest passwordChangeRequest) {
         Optional<User> userO = userRepository.findById(id);
         User user = null;
+        char[] newPassword = passwordChangeRequest.getNewPassword();
+        char[] oldPassword = passwordChangeRequest.getOldPassword();
 
-//        if (!passwordValidator.isValid(new String(password), null)) {
-//            throw new AppException("Invalid password", HttpStatus.BAD_REQUEST);
-//        }
         if (userO.isPresent()) {
+
             user = userO.get();
-            user.setPassword(passwordEncoder.encode(CharBuffer.wrap(password)));
+
+            if (!passwordEncoder.matches(CharBuffer.wrap(oldPassword).toString(), user.getPassword())) {
+              throw new BadCredentialsException("Old password does not match");
+            }
+
+            user.setPassword(passwordEncoder.encode(CharBuffer.wrap(newPassword)));
             userRepository.save(user);
 
-            String responseText = String.format("Password for User %s with id %d changed",user.getUserName(), id);
+            Arrays.fill(oldPassword, '\0');
+            Arrays.fill(newPassword, '\0');
+
+            String responseText = String.format("Password for User %s with id %d changed", user.getUserName(), id);
             log.info(responseText);
             return responseText;
         } else {

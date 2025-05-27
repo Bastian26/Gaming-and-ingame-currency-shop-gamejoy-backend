@@ -14,6 +14,7 @@ import com.gamejoy.domain.usermanagement.mappers.UserMapper;
 import com.gamejoy.domain.usermanagement.repositories.AddressRepository;
 import com.gamejoy.domain.usermanagement.repositories.UserRepository;
 import java.nio.CharBuffer;
+import java.util.Arrays;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -46,9 +47,9 @@ public class AuthService {
 
     public UserDto register(SignUpDto signUpDto) {
         Optional<User> oUser = userRepository.findByUserName(signUpDto.userName());
+        char[] password = signUpDto.password();
 
         if (oUser.isPresent()) {
-            // Alternative: BadCredentialsException
             throw new UserAlreadyExistsException(String.format("User %s already exists", signUpDto.userName()));
         }
 
@@ -60,7 +61,9 @@ public class AuthService {
 
         User user = userMapper.signUpDtoToUser(signUpDto);
         // encode password with passwordEncoder
-        user.setPassword(passwordEncoder.encode(CharBuffer.wrap(signUpDto.password())));
+        user.setPassword(passwordEncoder.encode(CharBuffer.wrap(password)));
+        Arrays.fill(password, '\0');  // set all chars as null - important for security - a string would remain in memory
+
         Address savedAddress = addressRepository.save(user.getAddress());
         user.setAddress(savedAddress);
         user.setUserRole(UserRole.USER);

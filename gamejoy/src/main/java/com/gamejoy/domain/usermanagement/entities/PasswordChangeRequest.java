@@ -1,5 +1,6 @@
 package com.gamejoy.domain.usermanagement.entities;
 
+import com.gamejoy.config.validation.customannotation.ValidPassword;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,8 +8,9 @@ import lombok.Setter;
 @Setter
 public class PasswordChangeRequest {
 
-  private String oldPassword;
-  private String newPassword;
+  @ValidPassword
+  private char[] oldPassword;
+  private char[] newPassword;
 }
 
 /**

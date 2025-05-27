@@ -52,7 +52,6 @@ public class GlobalExceptionHandler {
         return createErrorResponse(exception, request, ErrorCode.VALIDATION_FAILED, true);
     }
 
-    // At the moment not used - but stays as example here
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ApiError> handleUserNotFound(UserNotFoundException exception,
                                                        HttpServletRequest request) {

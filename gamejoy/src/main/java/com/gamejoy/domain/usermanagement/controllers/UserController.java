@@ -1,5 +1,6 @@
 package com.gamejoy.domain.usermanagement.controllers;
 
+import com.gamejoy.config.security.model.UserPrincipal;
 import com.gamejoy.domain.common.dto.api.ApiResponseWrapper;
 import com.gamejoy.domain.usermanagement.dto.UserDto;
 import com.gamejoy.domain.usermanagement.entities.PasswordChangeRequest;
@@ -8,7 +9,6 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -71,13 +71,12 @@ public class UserController {
 
     // User should only change pw for himself
     @PostMapping("/change-password")
-    public ResponseEntity<String> changePassword(@RequestBody PasswordChangeRequest request,
-      @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<String> changePassword(@RequestBody @Valid PasswordChangeRequest request,
+      @AuthenticationPrincipal UserPrincipal userDetails) {
 
         String response = userService.changePassword(
-          userDetails.getUsername(), // username of authenticated user (fetched from SecurityContext by @AuthenticationPrincipal)
-          request.getOldPassword(),
-          request.getNewPassword()
+          userDetails.user().getId(), // username of authenticated user (fetched from SecurityContext by @AuthenticationPrincipal)
+          request
         );
 
         return ResponseEntity.ok(response);
