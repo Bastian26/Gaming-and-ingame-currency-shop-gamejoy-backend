@@ -29,12 +29,12 @@ public class UserIngameCurrencyService {
         if (userIngameCurrenciesO.isPresent()) {
             List<IngameCurrency> ingameCurrencies = userIngameCurrenciesO.get().stream()
                     .map(UserIngameCurrency::getIngameCurrency)
-                    .collect(Collectors.toList());
+                    .toList();
 
             List<IngameCurrencyDto> ingameCurrencyDtos = ingameCurrencies.stream()
                     .map(ingameCurrencyMapper::toIngameCurrencyDto)
                     .sorted(Comparator.comparing(IngameCurrencyDto::getCurrencyName))
-                    .collect(Collectors.toList());
+                    .toList();
 
             return ingameCurrencyDtos;
         }
