@@ -33,11 +33,15 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .addFilterBefore(new JwtAuthFilter(userAuthProvider), BasicAuthenticationFilter.class)
                 .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(requests -> {
-                    requests.requestMatchers("/auth/**").hasRole("ADMIN"); // Only admins can access /admin/** - could be rmeoved because its already defined in AdminController
-                    requests.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN"); // Users and admins can access /user/** - could be rmeoved because its already defined in AdminController
-                    requests.anyRequest().permitAll(); // Allow all other requests
-                });
+                .authorizeHttpRequests(requests -> requests
+                    .requestMatchers(
+                        "/api/v1/auth/**",
+                        "/v3/api-docs/**",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html"
+                    ).permitAll()
+                    .anyRequest().authenticated()
+                );
 
         return httpSecurity.build();
     }

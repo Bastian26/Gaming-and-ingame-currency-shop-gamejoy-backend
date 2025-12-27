@@ -8,3 +8,8 @@ spring:
 springdoc:
   swagger-ui:
     path: /custom-swagger-ui  # Custom Pfad zur Swagger-UI - http://localhost:8080/custom-swagger-ui
+
+security:
+  jwt:
+    token:
+      secret-key: fPRq2bLDmDPfh3DM/3KfY+FQoNybJrSXT/cmiMkqStt7G2KTeFLa1CZehBAyoTN0

@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -35,7 +36,11 @@ public class AuthController {
     private final AuthService authService;
     private final UserAuthProvider userAuthProvider;
 
-    @Operation(summary = "Creates/Registers a new user", description = "Adds a new user to the system - returns user info and token")
+    @Operation(
+      summary = "Creates/Registers a new user",
+      description = "Adds a new user to the system - returns user info and token",
+      security = {}
+    )
     @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "User successfully registered",
         content = @Content(schema = @Schema(implementation = UserDto.class))),
@@ -54,7 +59,11 @@ public class AuthController {
         return ResponseEntity.created(URI.create("/api/v1/auth/" + user.getId())).body(response);
     }
 
-    @Operation(summary = "Create/Register a new user", description = "Registers a new user in the system and returns the user's details along with a JWT token for authentication.")
+    @Operation(
+      summary = "Login user",
+      description = "Authenticates an existing user and returns user details with JWT token.",
+      security = {}
+    )
     @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "User logged in",
         content = @Content(schema = @Schema(implementation = UserDto.class))),

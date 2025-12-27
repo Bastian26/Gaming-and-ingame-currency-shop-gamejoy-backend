@@ -19,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
@@ -34,14 +35,17 @@ import java.util.Date;
 public class UserAuthProvider {
 
 
-    @Value("${security.jwt.token.secret-key:secret-key}")
+    @Value("${security.jwt.token.secret-key}")
     private String secretKey;
 
     private final UserRepository userRepository;
 
     @PostConstruct
-    protected  void inti() {
-        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+    protected void init() {
+        if (secretKey == null || secretKey.isBlank()) {
+            throw new IllegalStateException("security.jwt.token.secret-key must be configured");
+        }
+        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
     public String createToken(UserDto userDto) {
