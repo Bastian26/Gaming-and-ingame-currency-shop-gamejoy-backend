@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +31,7 @@ import static com.gamejoy.domain.usermanagement.constants.UserApiPaths.AUTH_API_
 @RestController
 @RequestMapping(AUTH_API_BASE_URL)
 @RequiredArgsConstructor
+@Slf4j
 @Tag(name = "Authentication Management", description = "APIs for authentication")
 public class AuthController {
 
@@ -51,6 +53,7 @@ public class AuthController {
     })
     @PostMapping("/register")
     public ResponseEntity<ApiResponseWrapper<UserDto>> register(@Valid @RequestBody SignUpDto signUpDto) {
+        log.info("Request: register user {}", signUpDto.userName());
         UserDto user = authService.register(signUpDto);
         user.setToken(userAuthProvider.createToken(user));
 
@@ -74,6 +77,7 @@ public class AuthController {
     })
     @PostMapping("/login")
     public ResponseEntity<ApiResponseWrapper<UserDto>> login(@RequestBody CredentialDto credentialDto) {
+        log.info("Request: login user {}", credentialDto.userName());
         UserDto user = authService.login(credentialDto);
         user.setToken(userAuthProvider.createToken(user));
 

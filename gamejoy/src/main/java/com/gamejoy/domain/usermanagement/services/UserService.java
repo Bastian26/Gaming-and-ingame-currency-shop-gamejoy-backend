@@ -9,7 +9,7 @@ import com.gamejoy.domain.usermanagement.repositories.UserRepository;
 import java.util.Arrays;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-@Log4j2
+@Slf4j
 public class UserService {
 
     private final UserRepository userRepository;
@@ -31,6 +31,7 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow(
             () -> new UserNotFoundException(String.format("User with %d not found", userId))
           );
+        log.info("User {} retrieved by id {}", user.getUserName(), userId);
 
         return userMapper.toUserDto(user);
     }
@@ -50,6 +51,7 @@ public class UserService {
           () -> new UserNotFoundException(String.format("User with ID %d not found", userId))
         );
         userRepository.delete(entity);
+        log.info("User {} with id {} deleted", entity.getUserName(), userId);
     }
 
 /*

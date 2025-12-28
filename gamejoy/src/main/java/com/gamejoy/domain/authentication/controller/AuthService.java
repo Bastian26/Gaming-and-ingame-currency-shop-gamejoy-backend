@@ -17,13 +17,13 @@ import java.nio.CharBuffer;
 import java.util.Arrays;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-@Log4j2
+@Slf4j
 public class AuthService {
     private final UserRepository userRepository;
     private final UserIngameCurrencyService userIngameCurrencyService;

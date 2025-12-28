@@ -2,8 +2,6 @@
 # mvn spring-boot:run -Pdocker-compose -Dspring-boot.run.profiles=docker-compose todo: would need maven plugin/profile
 # docker-compose down -v  # VOLUMES LÖSCHEN – sonst bleibt das alte Password
 # postgres server has to be stopped!
-
-version: '3.8'
 services:
   postgres:
     container_name: postgres

@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
+@Slf4j
 @SecurityRequirement(name = "bearerAuth")
 @Tag(name = "User Management", description = "Operations for managing users")
 public class UserController {
@@ -44,6 +46,7 @@ public class UserController {
       @ApiResponse(responseCode = "404", description = "User not found", content = @Content(schema = @Schema(implementation = ApiError.class)))
     })
     public ResponseEntity<ApiResponseWrapper<UserDto>> getUserById(@PathVariable Long id) {
+        log.info("Request: get user by id={}", id);
         UserDto userDto = userService.getUserById(id);
 
         ApiResponseWrapper<UserDto> response = new ApiResponseWrapper<>(
@@ -58,6 +61,7 @@ public class UserController {
       @ApiResponse(responseCode = "200", description = "Users retrieved", content = @Content(schema = @Schema(implementation = UserDto.class)))
     })
     public ResponseEntity<ApiResponseWrapper<List<UserDto>>> getAllUsers() {
+        log.info("Request: list all users");
         List<UserDto> userDtoList = userService.getAllUsers();
 
         ApiResponseWrapper<List<UserDto>> response = new ApiResponseWrapper<>(
@@ -74,6 +78,7 @@ public class UserController {
     })
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUserById(id);
+        log.info("Request: delete user id={}", id);
         return ResponseEntity.noContent().build();  // Return HTTP 204 No Content to indicate successful deletion
     }
 /*
@@ -108,6 +113,7 @@ public class UserController {
           userDetails.user().getId(), // username of authenticated user (fetched from SecurityContext by @AuthenticationPrincipal)
           request
         );
+        log.info("Request: change password for user id={}", userDetails.user().getId());
 
         return ResponseEntity.ok(response);
     }
